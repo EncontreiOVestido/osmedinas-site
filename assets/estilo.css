@@ -1,0 +1,409 @@
+/* ==========================================================================
+   OS MEDINAS — folha de estilo
+   Cores e fontes vêm do manual oficial da marca. Não inventar valor novo.
+   ========================================================================== */
+
+@font-face{
+  font-family:"ZT Formom";
+  src:url("fontes/zt-formom.woff") format("woff"),
+      url("fontes/zt-formom.otf") format("opentype");
+  font-weight:400; font-style:normal; font-display:swap;
+}
+@font-face{ font-family:"Aileron"; src:url("fontes/Aileron-Light.otf") format("opentype");    font-weight:300; font-display:swap; }
+@font-face{ font-family:"Aileron"; src:url("fontes/Aileron-Regular.otf") format("opentype");  font-weight:400; font-display:swap; }
+@font-face{ font-family:"Aileron"; src:url("fontes/Aileron-SemiBold.otf") format("opentype"); font-weight:600; font-display:swap; }
+@font-face{ font-family:"Aileron"; src:url("fontes/Aileron-Bold.otf") format("opentype");     font-weight:700; font-display:swap; }
+@font-face{ font-family:"Bickham"; src:url("fontes/BickhamScriptPro-Regular.otf") format("opentype"); font-weight:400; font-display:swap; }
+
+:root{
+  /* paleta institucional — manual §cores */
+  --osso:#F2F0EB;
+  --grafite:#423F37;
+  --verde:#9C9687;
+  --verde-2:#B5AE9D;   /* variação do manual: texto pequeno sobre o escuro */
+  --marrom:#917461;
+  --rose:#DBB7A7;
+  --noite:#292822;
+  --noite-2:#36342D;
+
+  --serifa:"ZT Formom", Georgia, "Times New Roman", serif;
+  --corpo:"Aileron", "Helvetica Neue", Arial, sans-serif;
+  --script:"Bickham", "Segoe Script", cursive;
+
+  --tras:cubic-bezier(.22,.61,.36,1);
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ scroll-behavior:smooth; }
+@media (prefers-reduced-motion:reduce){ html{ scroll-behavior:auto; } }
+
+body{
+  margin:0;
+  background:var(--osso);
+  color:var(--grafite);
+  font-family:var(--corpo);
+  font-weight:300;
+  font-size:1.0625rem;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+
+img{ max-width:100%; display:block; }
+
+a{ color:inherit; }
+
+:focus-visible{ outline:2px solid var(--marrom); outline-offset:3px; }
+
+.pular{
+  position:absolute; left:-9999px; top:0; z-index:99;
+  background:var(--grafite); color:var(--osso);
+  padding:.75rem 1.25rem; font-size:.9rem;
+}
+.pular:focus{ left:0; }
+
+/* --------------------------------------------------------------- estrutura */
+.faixa{
+  width:100%;
+  max-width:1120px;
+  margin-inline:auto;
+  padding-inline:1.5rem;
+}
+.faixa--estreita{ max-width:680px; }
+
+/* ------------------------------------------------------------------- herói */
+.heroi{
+  position:relative;
+  min-height:100svh;
+  display:grid;
+  grid-template-rows:auto 1fr auto;
+  overflow:hidden;
+  background:var(--noite);
+}
+.heroi__foto{ position:absolute; inset:0; display:block; }
+.heroi__foto img{
+  width:100%; height:100%;
+  object-fit:cover; object-position:center 45%;
+}
+/* véu: escurece o alto (onde mora o texto) sem apagar o campo de velas */
+.heroi::after{
+  content:""; position:absolute; inset:0;
+  background:
+    linear-gradient(to bottom, rgba(20,19,16,.72) 0%, rgba(20,19,16,.28) 42%, rgba(20,19,16,0) 62%),
+    linear-gradient(to top,    rgba(20,19,16,.55) 0%, rgba(20,19,16,0) 30%);
+}
+.heroi > :not(.heroi__foto){ position:relative; z-index:1; }
+
+.heroi__topo{ padding:1.75rem 1.5rem 0; }
+.heroi__logo{ width:104px; opacity:.95; }
+
+.heroi__texto{
+  align-self:start;
+  padding:2.25rem 1.5rem 0;
+  max-width:34rem;
+}
+
+.tese{
+  margin:0;
+  font-family:var(--serifa);
+  font-weight:400;
+  color:var(--osso);
+  line-height:1.04;
+  letter-spacing:-.005em;
+  font-size:clamp(2.05rem, 8.6vw, 4.6rem);
+}
+.tese__leve,
+.tese__forte{ display:block; }
+.tese__leve{ opacity:.62; }
+.tese__forte{ margin-top:.12em; }
+
+/* a assinatura da casa: afirmação em cima, provocação na caixa escura embaixo.
+   É o dispositivo dos próprios stories deles. */
+.provoca{
+  display:inline-block;
+  margin:1.5rem 0 0;
+  padding:.5rem 1rem .55rem;
+  background:var(--noite);
+  color:var(--rose);
+  font-family:var(--corpo);
+  font-weight:400;
+  font-size:.8125rem;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+}
+.provoca--claro{
+  background:rgba(20,19,16,.92);
+  box-shadow:inset 0 0 0 1px rgba(219,183,167,.42);
+}
+
+.heroi__oque{
+  margin:1.4rem 0 0;
+  font-size:.78rem; font-weight:400;
+  letter-spacing:.17em; text-transform:uppercase;
+  color:var(--osso); opacity:.82;
+}
+
+.rolar{
+  justify-self:center;
+  margin-bottom:2rem;
+  width:1px; height:56px;
+  background:linear-gradient(to bottom, rgba(242,240,235,0), rgba(242,240,235,.85));
+  display:block;
+}
+.rolar span{
+  display:block; width:5px; height:5px; border-radius:50%;
+  background:var(--osso); transform:translate(-2px, 54px);
+  animation:cair 2.4s var(--tras) infinite;
+}
+@keyframes cair{
+  0%{ transform:translate(-2px, 6px); opacity:0; }
+  40%{ opacity:1; }
+  100%{ transform:translate(-2px, 54px); opacity:0; }
+}
+@media (prefers-reduced-motion:reduce){ .rolar span{ animation:none; } }
+
+/* ------------------------------------------------ cabeçalho de cada seção */
+.cabeca{ max-width:38rem; }
+
+.olho{
+  margin:0 0 1.25rem;
+  font-size:.75rem; font-weight:600;
+  letter-spacing:.22em; text-transform:uppercase;
+  color:var(--grafite);
+}
+.olho--claro{ color:var(--rose); }
+
+.afirma{
+  margin:0;
+  font-family:var(--serifa);
+  font-weight:400;
+  line-height:1.12;
+  letter-spacing:-.005em;
+  font-size:clamp(1.95rem, 6.6vw, 3.15rem);
+  color:var(--grafite);
+}
+.afirma--claro{ color:var(--osso); }
+
+/* --------------------------------------------------------------- quem somos */
+.quem{ padding:5.5rem 0 4.5rem; }
+
+.quem__grade{ margin-top:3.25rem; display:grid; gap:2.25rem; }
+
+.quem__foto{ margin:0; }
+.quem__foto img{
+  width:100%; aspect-ratio:4/5; object-fit:cover; object-position:center 30%;
+}
+
+.quem__texto p{ margin:0 0 1.1rem; max-width:34rem; }
+.quem__texto strong{ font-weight:600; }
+.quem__texto a{ color:var(--grafite); text-decoration-color:var(--rose); text-decoration-thickness:2px; text-underline-offset:4px; }
+
+.assinatura{
+  font-family:var(--script);
+  font-size:2.9rem;
+  line-height:1;
+  color:var(--marrom);
+  margin-top:1.75rem !important;
+}
+
+/* ------------------------------------------------------------- o que fazemos */
+.fazemos{
+  padding:4.5rem 0 5.5rem;
+  background:
+    linear-gradient(to bottom, rgba(156,150,135,.10), rgba(156,150,135,.10));
+}
+
+.cartoes{
+  list-style:none; margin:3.25rem 0 0; padding:0;
+  display:grid; gap:1px;
+  background:rgba(66,63,55,.16);
+  border-block:1px solid rgba(66,63,55,.16);
+}
+
+.cartao{
+  background:var(--osso);
+  padding:2.25rem 1.75rem 2rem;
+  display:flex; flex-direction:column;
+}
+.cartao__nome{
+  margin:0 0 .9rem;
+  font-family:var(--serifa); font-weight:400;
+  font-size:1.65rem; line-height:1.15;
+}
+.cartao__texto{ margin:0 0 1.75rem; flex:1; }
+
+.cartao__acao{
+  align-self:flex-start;
+  font-size:.8125rem; font-weight:600;
+  letter-spacing:.12em; text-transform:uppercase;
+  color:var(--grafite);
+  text-decoration:none;
+  padding-bottom:.4rem;
+  border-bottom:2px solid var(--rose);
+  transition:border-color .25s var(--tras);
+}
+.cartao__acao::after{ content:" →"; }
+.cartao__acao:hover{ border-bottom-color:var(--marrom); }
+
+/* ---------------------------------------------------------------- media kit */
+.kit{
+  background:var(--noite);
+  color:var(--osso);
+  padding:5.5rem 0 0;
+}
+
+.numeros{
+  list-style:none; margin:3.25rem 0 0; padding:0;
+  display:grid; gap:1.75rem;
+}
+.numeros li{ border-top:1px solid rgba(219,183,167,.28); padding-top:1rem; }
+.numeros b{
+  display:block;
+  font-family:var(--serifa); font-weight:400;
+  font-size:clamp(2.6rem, 12vw, 3.6rem); line-height:1;
+  color:var(--osso);
+}
+.numeros span{
+  display:block; margin-top:.5rem;
+  font-size:.78rem; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--verde);
+}
+
+.curva{ margin-top:3.5rem; }
+.curva__rotulo,
+.portfolio__rotulo{
+  margin:0 0 1.25rem;
+  font-size:.72rem; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--verde);
+}
+.curva__marcos{
+  list-style:none; margin:0; padding:0;
+  display:grid; grid-template-columns:repeat(3, 1fr); gap:.75rem;
+  border-top:1px solid rgba(219,183,167,.28);
+  padding-top:1.1rem;
+}
+.curva__marcos b{
+  display:block;
+  font-family:var(--serifa); font-weight:400;
+  font-size:clamp(1.25rem, 5.4vw, 1.7rem); line-height:1.1;
+}
+.curva__marcos span{
+  display:block; margin-top:.35rem;
+  font-size:.72rem; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--verde);
+}
+.curva__salto{
+  margin:1.25rem 0 0;
+  font-family:var(--serifa);
+  font-size:1.35rem;
+  color:var(--rose);
+}
+
+.portfolio{ margin-top:3.5rem; }
+.portfolio__lista{
+  margin:0;
+  font-family:var(--serifa);
+  font-size:clamp(1.15rem, 5vw, 1.5rem);
+  line-height:1.6;
+  color:var(--osso);
+}
+
+.kit__nota{
+  margin:2.75rem 0 0;
+  padding-bottom:4.5rem;
+  font-size:.78rem;
+  color:var(--verde);
+}
+
+.kit__foto{ margin:0; }
+.kit__foto img{ width:100%; aspect-ratio:16/9; object-fit:cover; }
+
+/* ----------------------------------------------------------------- contato */
+.contato{
+  background:var(--noite-2);
+  color:var(--osso);
+  padding:5rem 0 5.5rem;
+  text-align:center;
+}
+.contato__selo{ width:112px; margin:0 auto 2rem; opacity:.9; }
+.contato__titulo{ margin-bottom:2.5rem; }
+
+.botao{
+  display:inline-block;
+  background:var(--rose);
+  color:var(--noite);
+  text-decoration:none;
+  font-size:.8125rem; font-weight:700;
+  letter-spacing:.14em; text-transform:uppercase;
+  padding:1.15rem 2.5rem;
+  transition:background .25s var(--tras), transform .25s var(--tras);
+}
+.botao:hover{ background:var(--osso); transform:translateY(-2px); }
+
+.redes{
+  list-style:none; margin:2.75rem 0 0; padding:0;
+  display:flex; gap:2rem; justify-content:center; flex-wrap:wrap;
+}
+.redes a{
+  font-size:.78rem; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--verde-2); text-decoration:none;
+  padding-bottom:.3rem; border-bottom:1px solid transparent;
+  transition:color .25s var(--tras), border-color .25s var(--tras);
+}
+.redes a:hover{ color:var(--rose); border-bottom-color:currentColor; }
+
+/* ------------------------------------------------------------------ rodapé */
+.rodape{
+  background:var(--noite);
+  color:var(--verde);
+  padding:2rem 1.5rem;
+  display:flex; flex-direction:column; gap:.35rem;
+  align-items:center; text-align:center;
+  font-size:.78rem; letter-spacing:.1em;
+}
+.rodape p{ margin:0; }
+
+/* ------------------------------------------------------------------ surgir */
+.surge{ opacity:0; transform:translateY(18px); }
+.surge.visivel{
+  opacity:1; transform:none;
+  transition:opacity .7s var(--tras), transform .7s var(--tras);
+}
+@media (prefers-reduced-motion:reduce){
+  .surge{ opacity:1; transform:none; }
+}
+
+/* ===================================================== telas maiores ===== */
+@media (min-width:600px){
+  .cartoes{ grid-template-columns:1fr 1fr; }
+  .numeros{ grid-template-columns:repeat(3, 1fr); gap:2rem; }
+}
+
+@media (min-width:900px){
+  body{ font-size:1.0625rem; }
+
+  .heroi__topo{ padding:2.5rem 3rem 0; }
+  .heroi__logo{ width:130px; }
+  .heroi__texto{ padding:3rem 3rem 0; max-width:40rem; }
+  .tese{ font-size:clamp(3.4rem, 5.4vw, 5.1rem); }
+
+  .faixa{ padding-inline:3rem; }
+
+  .quem{ padding:8rem 0 7rem; }
+  .quem__grade{
+    grid-template-columns:minmax(0,.85fr) minmax(0,1fr);
+    gap:4.5rem; align-items:center;
+  }
+
+  .fazemos{ padding:7rem 0 8rem; }
+  .cartoes{ grid-template-columns:repeat(4, 1fr); }
+  .cartao{ padding:2.5rem 1.6rem 2.25rem; }
+
+  .kit{ padding-top:8rem; }
+  .curva{ margin-top:4.5rem; }
+  .curva__marcos{ max-width:44rem; }
+  .portfolio__lista{ max-width:50rem; }
+
+  .contato{ padding:7rem 0 8rem; }
+  .rolar{ justify-self:end; margin-right:3rem; }
+}
