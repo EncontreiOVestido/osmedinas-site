@@ -250,6 +250,12 @@ a{ color:inherit; }
 .heroi__acoes .botao{ text-align:center; }
 .botao--heroi{ padding:1rem 1.6rem; }
 .heroi__acoes .botao{ white-space:nowrap; }
+/* Android com fonte do sistema ampliada: o botão não pode passar da coluna.
+   Se o texto não couber, ele quebra em duas linhas dentro do botão. */
+@media (max-width:899px){
+  .heroi__acoes{ max-width:min(22rem, 100%); }
+  .heroi__acoes .botao{ padding-inline:1rem; white-space:normal; min-width:0; }
+}
 .botao.botao--vazado{
   background:transparent; color:var(--osso);
   box-shadow:inset 0 0 0 1px rgba(242,240,235,.6);
