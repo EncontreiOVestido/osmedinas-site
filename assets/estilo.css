@@ -422,6 +422,7 @@ a{ color:inherit; }
   box-shadow:0 6px 24px rgba(0,0,0,.35);
   font-size:.72rem; letter-spacing:.12em; text-transform:uppercase;
 }
+.versoes[hidden]{ display:none; }
 .versoes__rotulo{ margin-right:.35rem; color:var(--verde-2); }
 .versoes a{
   display:grid; place-items:center; width:2.1rem; height:2.1rem; border-radius:50%;
