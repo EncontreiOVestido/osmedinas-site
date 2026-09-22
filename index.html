@@ -15,7 +15,7 @@
 <meta property="og:image" content="https://osmedinas.com.br/assets/img/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="A capela iluminada à noite, sob fogos de artifício, no casamento de Thalita e Léo Medina.">
+<meta property="og:image:alt" content="Thalita e Léo Medina sob o coqueiro, com o véu sobre a areia, entre as velas, à noite.">
 <meta property="og:url" content="https://osmedinas.com.br/">
 <meta property="og:site_name" content="Os Medinas">
 <meta property="og:locale" content="pt_BR">
@@ -29,8 +29,8 @@
 <!-- ============ HERÓI ============ -->
 <header class="heroi">
   <picture class="heroi__foto">
-    <source media="(min-width: 720px)" srcset="assets/img/v1/heroi.jpg">
-    <img src="assets/img/v1/heroi-mob.jpg" alt="A capela iluminada à noite, sob fogos de artifício, no casamento de Thalita e Léo Medina." fetchpriority="high">
+    <source media="(min-width: 720px)" srcset="assets/img/v2/heroi.jpg">
+    <img src="assets/img/v2/heroi-mob.jpg" alt="Thalita e Léo Medina sob o coqueiro, com o véu sobre a areia, entre as velas, à noite." fetchpriority="high">
   </picture>
 
   <div class="heroi__topo">
@@ -63,7 +63,7 @@
 
     <div class="quem__grade">
       <figure class="quem__foto">
-        <img src="assets/img/v1/sobre.jpg" alt="Thalita e Léo Medina, frente a frente, sob o arco, no dia do próprio casamento." loading="lazy">
+        <img src="assets/img/v2/sobre.jpg" alt="Thalita assina o livro de casamento à beira-mar, ao lado de Léo." loading="lazy">
       </figure>
       <div class="quem__texto">
         <p class="quem__abre">Enquanto todos assistem à festa, nós a interpretamos: por que aquela flor, por que aquela luz, por que aquele horário.</p>
@@ -194,7 +194,7 @@
   </div>
 
   <figure class="prova__foto">
-    <img src="assets/img/v1/fecho.jpg" alt="Thalita e Léo Medina entre as velas, à noite, no dia do próprio casamento." loading="lazy">
+    <img src="assets/img/v2/fecho.jpg" alt="Thalita e Léo Medina sob o arco floral da capela iluminada, à noite." loading="lazy">
   </figure>
 </section>
 
@@ -257,8 +257,8 @@
 
 <script>
   /* ATENÇÃO: ÚNICO lugar do site com o número. Trocar aqui troca em todos os botões.
-     HOJE: número do Encontrei o Vestido (provisório, o do Os Medinas não existe ainda). */
-  const WHATSAPP = "5582981814812";
+     Número comercial do Os Medinas, informado por ele em 22/09/2026. */
+  const WHATSAPP = "5582993861800";
 
   document.querySelectorAll("[data-zap]").forEach(function (a) {
     a.href = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(a.dataset.zap);
@@ -271,10 +271,11 @@
     const n = new URLSearchParams(location.search).get("versao");
     if (!/^[123]$/.test(n || "")) return;
     const d = "assets/img/v" + n + "/";
+    const alt = {"1": {"heroi": "A capela iluminada à noite, sob fogos de artifício, no casamento de Thalita e Léo Medina.", "sobre": "Thalita e Léo Medina, frente a frente, sob o arco, no dia do próprio casamento.", "fecho": "Thalita e Léo Medina entre as velas, à noite, no dia do próprio casamento."}, "2": {"heroi": "Thalita e Léo Medina sob o coqueiro, com o véu sobre a areia, entre as velas, à noite.", "sobre": "Thalita assina o livro de casamento à beira-mar, ao lado de Léo.", "fecho": "Thalita e Léo Medina sob o arco floral da capela iluminada, à noite."}, "3": {"heroi": "Thalita e Léo Medina, testa com testa, sob fogos de artifício diante da capela.", "sobre": "O beijo de Thalita e Léo Medina, em preto e branco, à beira-mar.", "fecho": "Thalita e Léo Medina dançando sob o pavilhão iluminado, à noite."}}[n];
     document.querySelector(".heroi__foto source").srcset = d + "heroi.jpg";
-    document.querySelector(".heroi__foto img").src = d + "heroi-mob.jpg";
-    document.querySelector(".quem__foto img").src = d + "sobre.jpg";
-    document.querySelector(".prova__foto img").src = d + "fecho.jpg";
+    const h = document.querySelector(".heroi__foto img"); h.src = d + "heroi-mob.jpg"; h.alt = alt.heroi;
+    const q = document.querySelector(".quem__foto img"); q.src = d + "sobre.jpg"; q.alt = alt.sobre;
+    const f = document.querySelector(".prova__foto img"); f.src = d + "fecho.jpg"; f.alt = alt.fecho;
     const barra = document.querySelector(".versoes");
     barra.hidden = false;
     barra.querySelectorAll("a").forEach(function (a) { if (a.textContent === n) a.setAttribute("aria-current", "true"); });
