@@ -424,13 +424,11 @@ a{ color:inherit; }
 .rodape p{ margin:0; }
 
 /* ------------------------------------------------------------------ surgir */
-.surge{ opacity:0; transform:translateY(18px); }
-.surge.visivel{
-  opacity:1; transform:none;
-  transition:opacity .7s var(--tras), transform .7s var(--tras);
-}
+/* estado visível por padrão: quem rola vê apenas um deslocamento leve */
+.surge{ transform:translateY(14px); }
+.surge.visivel{ transform:none; transition:transform .7s var(--tras); }
 @media (prefers-reduced-motion:reduce){
-  .surge{ opacity:1; transform:none; }
+  .surge{ transform:none; }
 }
 
 /* ===================================================== telas maiores ===== */
@@ -443,7 +441,7 @@ a{ color:inherit; }
 
   .heroi__topo{ padding:2.5rem 3rem 0; }
   .heroi__logo{ width:130px; }
-  .heroi__texto{ padding:3rem 3rem 0; max-width:56rem; }
+  .heroi__texto{ padding:3rem 3rem 0; max-width:76rem; }
   .tese{ font-size:clamp(3.4rem, 5.4vw, 5.1rem); }
 
   .faixa{ padding-inline:3rem; }
