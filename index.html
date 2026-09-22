@@ -27,7 +27,7 @@
 <a class="pular" href="#quem">Pular para o conteúdo</a>
 
 <!-- ============ HERÓI ============ -->
-<header class="heroi">
+<header class="heroi heroi--direita">
   <picture class="heroi__foto">
     <source media="(min-width: 720px)" srcset="assets/img/v2/heroi.jpg">
     <img src="assets/img/v2/heroi-mob.jpg" alt="Thalita e Léo Medina sob o coqueiro, com o véu sobre a areia, entre as velas, à noite." fetchpriority="high">
@@ -276,6 +276,7 @@
     const h = document.querySelector(".heroi__foto img"); h.src = d + "heroi-mob.jpg"; h.alt = alt.heroi;
     const q = document.querySelector(".quem__foto img"); q.src = d + "sobre.jpg"; q.alt = alt.sobre;
     const f = document.querySelector(".prova__foto img"); f.src = d + "fecho.jpg"; f.alt = alt.fecho;
+    document.querySelector(".heroi").classList.toggle("heroi--direita", n !== "1");
     const barra = document.querySelector(".versoes");
     barra.hidden = false;
     barra.querySelectorAll("a").forEach(function (a) { if (a.textContent === n) a.setAttribute("aria-current", "true"); });

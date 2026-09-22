@@ -482,7 +482,6 @@ a{ color:inherit; }
   .obras__lista{ grid-template-columns:repeat(4, 1fr); }
   .perguntas{ padding:7rem 0; }
   .insta__grade{ grid-template-columns:repeat(6, 1fr); }
-  .insta{ width:min(1024px, calc(100vw - 6rem)); margin-left:50%; transform:translateX(-50%); }
   .stories{ grid-column:1 / -1; }
   .heroi__acoes{ flex-direction:row; align-items:flex-start; gap:1rem; max-width:none; }
   .prova__foto img{ aspect-ratio:21/9; }
@@ -493,4 +492,108 @@ a{ color:inherit; }
 
   .contato{ padding:7rem 0 8rem; }
   .rolar{ justify-self:end; margin-right:3rem; }
+}
+
+
+/* ==================================================================
+   COMPUTADOR — página de revista (22/09, direção da Fable).
+   Tudo aqui mora em media query: o celular (até 899px) não lê nada disto.
+   ================================================================== */
+@media (min-width:900px){
+  /* eixo único: o herói alinha com o conteúdo */
+  .heroi{ min-height:92vh; }
+  .heroi::after{
+    background:
+      linear-gradient(to bottom, rgba(20,19,16,.70) 0%, rgba(20,19,16,.25) 38%, rgba(20,19,16,0) 58%),
+      linear-gradient(to top, rgba(41,40,34,.92) 0%, rgba(41,40,34,0) 25%);
+  }
+  .heroi__texto{ align-self:center; padding-top:0; }
+  .tese{ font-size:clamp(3rem, 4.2vw, 4.6rem); }
+  /* versões com o casal à esquerda da foto: o texto vai para a direita */
+  .heroi--direita .heroi__texto{ justify-self:end; }
+
+  /* Quem somos: foto à esquerda com a altura da coluna; título e texto à direita */
+  .quem .faixa{
+    display:grid; grid-template-columns:minmax(0,5fr) minmax(0,7fr);
+    grid-template-areas:"foto cabeca" "foto texto";
+    grid-template-rows:auto 1fr; column-gap:5rem; row-gap:2rem;
+  }
+  .quem__grade{ display:contents; }
+  .quem .cabeca{ grid-area:cabeca; align-self:end; }
+  .quem__foto{ grid-area:foto; }
+  .quem__foto img{ height:100%; min-height:640px; aspect-ratio:auto; }
+  .quem__texto{ grid-area:texto; }
+  .quem__texto p{ max-width:62ch; }
+
+  /* Serviços: três colunas de revista, sem moldura */
+  .cartoes{ background:none; border:0; gap:3.5rem; counter-reset:servico; }
+  .cartao{ background:none; padding:1.75rem 0 0; border-top:1px solid rgba(66,63,55,.28); counter-increment:servico; }
+  .cartao::before{
+    content:"0" counter(servico);
+    font-size:.75rem; font-weight:600; letter-spacing:.2em; color:var(--marrom);
+    margin-bottom:1rem;
+  }
+  .cartao__texto{ flex:none; margin-bottom:1.25rem; }
+  .cartao__acao{ margin-top:auto; padding-top:1.5rem; }
+
+  /* Diferenciais: argumento dos dois lados, o produto no centro */
+  .exemplos{ grid-template-columns:minmax(0,1fr) minmax(0,360px) minmax(0,1fr); gap:4rem 3.5rem; align-items:start; }
+  .exemplos > .exemplo:nth-child(1){ grid-column:1; grid-row:1; }
+  .exemplos > .exemplo:nth-child(2){ grid-column:3; grid-row:1; }
+  .exemplos > .stories{ grid-column:2; grid-row:1; }
+  .stories__tela{ max-width:360px; }
+  .exemplo__titulo{ font-size:1.6rem; }
+  .exemplo--foto{
+    grid-column:1 / -1; grid-row:2;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    grid-template-rows:1fr auto auto 1fr; column-gap:5rem; row-gap:1.25rem;
+  }
+  .exemplo--foto .exemplo__foto{ grid-column:1; grid-row:1 / -1; }
+  .exemplo--foto .exemplo__titulo{ grid-column:2; grid-row:2; font-size:2.4rem; line-height:1.15; }
+  .exemplo--foto .exemplo__efeito--grande{ grid-column:2; grid-row:3; font-family:var(--corpo); font-size:1.25rem; line-height:1.6; }
+  .exemplo__foto img{ height:560px; aspect-ratio:auto; }
+
+  /* Fecho: a foto acompanha, não domina */
+  .prova__foto img{ max-height:520px; }
+
+  /* Perguntas: título à esquerda, respostas à direita, no mesmo eixo */
+  .perguntas .faixa--estreita{ max-width:1120px; }
+  .perguntas .faixa{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,2fr); column-gap:5rem; align-items:start; }
+  .perguntas .faixa > .olho{
+    grid-column:1; grid-row:1 / span 3;
+    font-family:var(--serifa); font-weight:400; text-transform:none; letter-spacing:-.005em;
+    font-size:clamp(2.2rem, 2.6vw, 3.2rem); line-height:1.12; margin:0;
+  }
+  .perguntas .faixa > .pergunta{ grid-column:2; }
+  .pergunta summary{ font-size:1.25rem; }
+  .perguntas .faixa > .insta{ grid-column:1 / -1; }
+  .insta__grade{ gap:16px; }
+  .insta__grade img{ aspect-ratio:4/5; }
+
+  .obras__lista span{ font-size:.78rem; }
+}
+
+@media (min-width:1280px){
+  body{ font-size:1.125rem; }
+  .faixa, .perguntas .faixa--estreita{ max-width:none; width:min(1280px, calc(100% - 128px)); padding-inline:0; }
+  .heroi__topo, .heroi__texto{ padding-inline:max(64px, calc((100% - 1280px) / 2)); }
+  .heroi__texto{ max-width:none; }
+  .rolar{ margin-right:max(64px, calc((100% - 1280px) / 2)); }
+  .quem, .fazemos, .porque, .perguntas{ padding-block:7rem; }
+  .prova{ padding-top:7rem; }
+  .afirma{ font-size:clamp(2.6rem, 2.6vw, 3.6rem); }
+  .olho{ letter-spacing:.2em; }
+  .cartao__texto, .passos{ font-size:1.0625rem; }
+  .exemplo__efeito, .exemplo__citacao{ font-size:1.125rem; }
+  .fala blockquote{ font-size:1.0625rem; }
+}
+
+@media (min-width:1600px){
+  body{ font-size:1.1875rem; }
+  .faixa, .perguntas .faixa--estreita{ width:min(1440px, calc(100% - 160px)); }
+  .heroi__topo, .heroi__texto{ padding-inline:max(80px, calc((100% - 1440px) / 2)); }
+  .rolar{ margin-right:max(80px, calc((100% - 1440px) / 2)); }
+  .quem, .fazemos, .porque, .perguntas{ padding-block:8rem; }
+  .prova{ padding-top:8rem; }
+  .prova__foto img{ max-height:560px; }
 }
