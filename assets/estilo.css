@@ -1,41 +1,51 @@
 /* ==========================================================================
-   OS MEDINAS — folha de estilo
-   Cores e fontes vêm do manual oficial da marca. Não inventar valor novo.
+   OS MEDINAS — folha de estilo · versão final de 22/11/2026
+   Desenho: modelo da designer Natali Moura (Canva, 25/09/2026).
+   Engenharia: celular primeiro, contraste medido, fontes e cores do manual.
+   Não inventar valor novo: toda cor abaixo está no manual da marca.
    ========================================================================== */
 
 @font-face{
   font-family:"ZT Formom";
-  src:url("fontes/zt-formom.woff") format("woff"),
-      url("fontes/zt-formom.otf") format("opentype");
+  src:url("fontes/zt-formom.woff2") format("woff2"),
+      url("fontes/zt-formom.woff") format("woff");
   font-weight:400; font-style:normal; font-display:swap;
 }
-@font-face{ font-family:"Aileron"; src:url("fontes/Aileron-Light.otf") format("opentype");    font-weight:300; font-display:swap; }
-@font-face{ font-family:"Aileron"; src:url("fontes/Aileron-Regular.otf") format("opentype");  font-weight:400; font-display:swap; }
-@font-face{ font-family:"Aileron"; src:url("fontes/Aileron-SemiBold.otf") format("opentype"); font-weight:600; font-display:swap; }
-@font-face{ font-family:"Aileron"; src:url("fontes/Aileron-Bold.otf") format("opentype");     font-weight:700; font-display:swap; }
-@font-face{ font-family:"Bickham"; src:url("fontes/BickhamScriptPro-Regular.otf") format("opentype"); font-weight:400; font-display:swap; }
+@font-face{
+  font-family:"ZT Formom";
+  src:url("fontes/zt-formom-italic.woff2") format("woff2"),
+      url("fontes/zt-formom-italic.woff") format("woff");
+  font-weight:400; font-style:italic; font-display:swap;
+}
+@font-face{ font-family:"Aileron"; src:url("fontes/Aileron-Regular.woff2") format("woff2"),  url("fontes/Aileron-Regular.otf") format("opentype");  font-weight:400; font-display:swap; }
+@font-face{ font-family:"Aileron"; src:url("fontes/Aileron-SemiBold.woff2") format("woff2"), url("fontes/Aileron-SemiBold.otf") format("opentype"); font-weight:600; font-display:swap; }
+@font-face{ font-family:"Aileron"; src:url("fontes/Aileron-Bold.woff2") format("woff2"),     url("fontes/Aileron-Bold.otf") format("opentype");     font-weight:700; font-display:swap; }
 
 :root{
   /* paleta institucional — manual §cores */
   --osso:#F2F0EB;
+  --branco:#FFFFFF;
+  --cartao:#F4F4F2;
   --grafite:#423F37;
-  --verde:#9C9687;
-  --verde-2:#B5AE9D;   /* variação do manual: texto pequeno sobre o escuro */
-  --marrom:#917461;
-  --rose:#DBB7A7;
+  --greige:#9C9687;         /* acento: superfícies, barras, bordas e itálico grande sobre escuro */
+  --greige-texto:#807B6F;   /* o mesmo acento, um tom abaixo no manual: texto grande sobre claro (3,7:1) */
+  --greige-claro:#B5AE9D;   /* texto pequeno sobre escuro (4,7:1) */
+  --greige-fundo:#948E80;   /* a faixa das perguntas: o acento um fio mais fundo, para o título branco passar de 3:1 */
+  --greige-fino:#69655B;    /* texto pequeno sobre claro (5,1:1): o rótulo em caixa */
   --noite:#292822;
-  --noite-2:#36342D;
+  --ceu:#030303;            /* o preto do céu da fotografia do herói */
 
   --serifa:"ZT Formom", Georgia, "Times New Roman", serif;
   --corpo:"Aileron", "Helvetica Neue", Arial, sans-serif;
-  --script:"Bickham", "Segoe Script", cursive;
 
   --tras:cubic-bezier(.22,.61,.36,1);
+  --margem:1.5rem;
+  --respiro:clamp(4rem, 15vw, 5rem);       /* respiro vertical de cada seção, no celular */
 }
 
 *,*::before,*::after{ box-sizing:border-box; }
 
-html{ scroll-behavior:smooth; }
+html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; text-size-adjust:100%; }
 @media (prefers-reduced-motion:reduce){ html{ scroll-behavior:auto; } }
 
 body{
@@ -43,17 +53,19 @@ body{
   background:var(--osso);
   color:var(--grafite);
   font-family:var(--corpo);
-  font-weight:300;
+  font-weight:400;
   font-size:1.0625rem;
-  line-height:1.65;
+  line-height:1.5;
   -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
 }
 
-img{ max-width:100%; display:block; }
-
+img{ max-width:100%; height:auto; display:block; }
 a{ color:inherit; }
+p{ margin:0; text-wrap:pretty; }
+[id]{ scroll-margin-top:1.25rem; }
 
-:focus-visible{ outline:2px solid var(--marrom); outline-offset:3px; }
+:focus-visible{ outline:2px solid currentColor; outline-offset:3px; }
 
 .pular{
   position:absolute; left:-9999px; top:0; z-index:99;
@@ -65,541 +77,598 @@ a{ color:inherit; }
 /* --------------------------------------------------------------- estrutura */
 .faixa{
   width:100%;
-  max-width:1120px;
+  max-width:44rem;
   margin-inline:auto;
-  padding-inline:1.5rem;
+  padding-inline:var(--margem);
 }
-.faixa--estreita{ max-width:680px; }
+
+/* --------------------------------------------- tipografia de cada seção */
+/* O título da casa: ZT Formom, com UMA palavra em itálico e no acento da marca. */
+.titulo{
+  margin:0;
+  font-family:var(--serifa);
+  font-weight:400;
+  font-size:clamp(2.375rem, 10.2vw, 3.1rem);
+  line-height:1;
+  letter-spacing:-.012em;
+  color:var(--grafite);
+  text-wrap:balance;
+}
+.titulo em{ font-style:italic; color:var(--greige-texto); }
+.titulo--centro{ text-align:center; }
+.titulo--longo{ font-size:clamp(2.05rem, 8.8vw, 2.75rem); }
+.titulo--claro{ color:var(--osso); }
+.titulo--claro em{ color:var(--greige); }
+.titulo--branco{ color:var(--branco); }
+.titulo--greige{ color:var(--greige-texto); }
+
+/* rótulo em caixa: Aileron em caixa alta, bem espaçada, dentro de um fio */
+.rotulo{
+  display:inline-block;
+  margin:0;
+  padding:.85em 1.7em .8em 2em;
+  border:1px solid var(--greige);
+  font-size:.72rem; font-weight:700; line-height:1;
+  letter-spacing:.3em; text-transform:uppercase;
+  color:var(--greige-fino);
+}
+
+/* ---------------------------------------------------------------- botões */
+.botao{
+  display:inline-flex; align-items:center; justify-content:center;
+  min-height:3.25rem;
+  padding:.95rem 1.5rem;
+  background:var(--greige);
+  color:var(--noite);
+  box-shadow:inset 0 0 0 1px var(--greige);
+  text-align:center; text-decoration:none;
+  font-size:.75rem; font-weight:700; line-height:1.35;
+  letter-spacing:.2em; text-transform:uppercase;
+  transition:background .25s var(--tras), color .25s var(--tras), box-shadow .25s var(--tras);
+}
+.botao:hover{ background:var(--osso); color:var(--noite); box-shadow:inset 0 0 0 1px var(--osso); }
+.botao--vazado{
+  background:transparent; color:var(--branco);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.85);
+}
+.botao--vazado:hover{ background:rgba(255,255,255,.14); color:var(--branco); box-shadow:inset 0 0 0 1px var(--branco); }
+
+/* o "+" que vira "−" nas linhas que abrem */
+.mais{ flex:none; position:relative; width:.95rem; height:.95rem; display:block; }
+.mais::before,
+.mais::after{
+  content:""; position:absolute; left:0; right:0; top:50%;
+  height:1.5px; margin-top:-.75px; background:currentColor;
+  transition:transform .3s var(--tras);
+}
+.mais::after{ transform:rotate(90deg); }
+details[open] > summary .mais::after{ transform:rotate(0deg); }
+
+summary{ list-style:none; cursor:pointer; }
+summary::-webkit-details-marker{ display:none; }
 
 /* ------------------------------------------------------------------- herói */
 .heroi{
   position:relative;
+  display:flex; flex-direction:column; align-items:center;
+  min-height:100vh;      /* reserva para navegador antigo */
   min-height:100svh;
-  display:grid;
-  grid-template-rows:auto 1fr auto;
+  background:var(--ceu);
+  color:var(--branco);
+  text-align:center;
   overflow:hidden;
-  background:var(--noite);
 }
-.heroi__foto{ position:absolute; inset:0; display:block; }
-.heroi__foto img{
-  width:100%; height:100%;
-  object-fit:cover; object-position:center 45%;
-}
-/* véu: escurece o alto (onde mora o texto) sem apagar o campo de velas */
-.heroi::after{
-  content:""; position:absolute; inset:0;
-  background:
-    linear-gradient(to bottom, rgba(20,19,16,.72) 0%, rgba(20,19,16,.28) 42%, rgba(20,19,16,0) 62%),
-    linear-gradient(to top,    rgba(20,19,16,.55) 0%, rgba(20,19,16,0) 30%);
-}
-.heroi > :not(.heroi__foto){ position:relative; z-index:1; }
-
-.heroi__topo{ padding:1.75rem 1.5rem 0; }
-.heroi__logo{ width:104px; opacity:.95; }
-
-.heroi__texto{
-  align-self:start;
-  padding:2.25rem 1.5rem 0;
-  max-width:34rem;
-}
+.heroi__topo{ padding-top:clamp(1.75rem, 5.2svh, 3rem); }
+.heroi__logo{ width:clamp(104px, 28vw, 128px); }
 
 .tese{
-  margin:0;
+  margin:clamp(1.6rem, 4.6svh, 2.75rem) 0 0;
+  padding-inline:1rem;
   font-family:var(--serifa);
   font-weight:400;
-  color:var(--osso);
-  line-height:1.04;
-  letter-spacing:-.005em;
-  font-size:clamp(2.05rem, 8.6vw, 4.6rem);
+  font-size:clamp(1.7rem, 8.05vw, 2.6rem);
+  line-height:1.1;
+  letter-spacing:-.012em;
 }
-.tese__leve,
-.tese__forte{ display:block; }
-.tese__leve{ opacity:.62; }
-.tese__forte{ margin-top:.12em; }
+.tese em{ font-style:italic; }
+.tese__a,
+.tese__b{ display:block; }
+.tese__b{ color:var(--greige); }
 
-/* a assinatura da casa: afirmação em cima, provocação na caixa escura embaixo.
-   É o dispositivo dos próprios stories deles. */
-.provoca{
-  display:inline-block;
-  margin:1.5rem 0 0;
-  padding:.5rem 1rem .55rem;
-  background:var(--noite);
-  color:var(--rose);
-  font-family:var(--corpo);
-  font-weight:400;
-  font-size:.8125rem;
-  letter-spacing:.09em;
-  text-transform:uppercase;
+.heroi__acoes{
+  width:100%;
+  margin-top:clamp(1.5rem, 4.2svh, 2.4rem);
+  padding-inline:var(--margem);
+  display:flex; flex-direction:column; align-items:center; gap:.75rem;
 }
-.provoca--claro{
-  background:rgba(20,19,16,.92);
-  box-shadow:inset 0 0 0 1px rgba(219,183,167,.42);
+.heroi__acoes .botao{ width:min(100%, 22.5rem); }
+@media (max-width:389px){
+  .heroi__acoes .botao{ letter-spacing:.13em; padding-inline:.75rem; }
 }
 
-.heroi__oque{
-  margin:1.4rem 0 0;
-  font-size:.78rem; font-weight:400;
-  letter-spacing:.17em; text-transform:uppercase;
-  color:var(--osso); opacity:.82;
-}
-
-.rolar{
-  justify-self:center;
-  margin-bottom:2rem;
-  width:1px; height:56px;
-  background:linear-gradient(to bottom, rgba(242,240,235,0), rgba(242,240,235,.85));
+/* a cena: no celular a fotografia mora embaixo, inteira, e o céu dela continua no fundo */
+.heroi__foto{
+  order:5;
+  position:relative;
   display:block;
+  width:100%;
+  margin-top:auto;
+  padding-top:clamp(.5rem, 2svh, 1.5rem);
 }
-.rolar span{
-  display:block; width:5px; height:5px; border-radius:50%;
-  background:var(--osso); transform:translate(-2px, 54px);
-  animation:cair 2.4s var(--tras) infinite;
+.heroi__foto img{ width:100%; height:auto; }
+.heroi__foto::after{
+  content:""; position:absolute; left:0; right:0; top:0; height:16%;
+  background:linear-gradient(to bottom, var(--ceu) 12%, rgba(3,3,3,0) 100%);
+  pointer-events:none;
 }
-@keyframes cair{
-  0%{ transform:translate(-2px, 6px); opacity:0; }
-  40%{ opacity:1; }
-  100%{ transform:translate(-2px, 54px); opacity:0; }
-}
-@media (prefers-reduced-motion:reduce){ .rolar span{ animation:none; } }
-
-/* ------------------------------------------------ cabeçalho de cada seção */
-.cabeca{ max-width:38rem; }
-
-.olho{
-  margin:0 0 1.25rem;
-  font-size:.75rem; font-weight:600;
-  letter-spacing:.22em; text-transform:uppercase;
-  color:var(--grafite);
-}
-.olho--claro{ color:var(--rose); }
-
-.afirma{
-  margin:0;
-  font-family:var(--serifa);
-  font-weight:400;
-  line-height:1.12;
-  letter-spacing:-.005em;
-  font-size:clamp(1.95rem, 6.6vw, 3.15rem);
-  color:var(--grafite);
-}
-.afirma--claro{ color:var(--osso); }
 
 /* --------------------------------------------------------------- quem somos */
-.quem{ padding:5.5rem 0 4.5rem; }
-
-.quem__grade{ margin-top:3.25rem; display:grid; gap:2.25rem; }
+.quem{ padding-block:var(--respiro); }
+.quem__grade{ display:grid; gap:2rem; }
+.quem .titulo{ margin-top:1.9rem; }
 
 .quem__foto{ margin:0; }
 .quem__foto img{
-  width:100%; aspect-ratio:4/5; object-fit:cover; object-position:center;
+  width:100%;
+  aspect-ratio:4/5; object-fit:cover; object-position:50% 34%;
 }
 
-.quem__texto p{ margin:0 0 1.1rem; max-width:34rem; }
-.quem__texto strong{ font-weight:600; }
-.quem__texto a{ color:var(--grafite); text-decoration-color:var(--rose); text-decoration-thickness:2px; text-underline-offset:4px; }
+.quem__texto p{ max-width:34rem; }
+.quem__texto p + p{ margin-top:1.15em; }
+.quem__texto strong{ font-weight:700; }
+.quem__texto a{
+  text-decoration-line:underline;
+  text-decoration-color:var(--greige);
+  text-decoration-thickness:1px;
+  text-underline-offset:.22em;
+}
+.quem__texto a:hover{ text-decoration-thickness:2px; }
 
-.assinatura{
-  font-family:var(--script);
-  font-size:2.9rem;
-  line-height:1;
-  color:var(--marrom);
-  margin-top:1.75rem !important;
+/* ---------------------------------------------------------------- serviços */
+.servicos{
+  background:var(--grafite);
+  color:var(--osso);
+  padding-block:var(--respiro);
+}
+.servicos__grade,
+.perguntas__grade{ display:grid; gap:2.25rem; }
+
+.linhas{ display:grid; gap:1rem; align-content:start; }
+
+.linha{ border:1px solid rgba(242,240,235,.9); }
+.linha > summary{
+  display:block;
+  font-size:.75rem; font-weight:700; line-height:1.5;
+  letter-spacing:.24em; text-transform:uppercase;
+  transition:background .25s var(--tras);
+}
+/* o flex mora no miolo, e não no summary: o Safari antigo não aceita flex direto no summary */
+.linha__dentro{
+  display:flex; align-items:center; gap:1rem;
+  min-height:3.5rem;
+  padding:1rem 1.15rem;
+}
+.linha > summary:hover{ background:rgba(242,240,235,.06); }
+.linha__rotulo{ flex:1; min-width:0; }
+.linha__corpo{
+  padding:.35rem 1.15rem 1.6rem;
+  font-size:1rem; line-height:1.55;
+}
+.linha__corpo > p{ max-width:38rem; }
+.linha__corpo > * + *{ margin-top:1.05em; }
+.linha__corpo .botao{ margin-top:1.6rem; }
+
+/* dentro da faixa escura dos serviços o botão é claro, para se destacar do fundo */
+.botao--claro{ min-height:3rem; background:var(--osso); color:var(--grafite); box-shadow:inset 0 0 0 1px var(--osso); }
+.botao--claro:hover{ background:var(--greige); color:var(--noite); box-shadow:inset 0 0 0 1px var(--greige); }
+
+/* a frase-prova: o que a casa escreveu numa cobertura real */
+.citacao{
+  margin:1.5rem 0;
+  padding:.1rem 0 .1rem 1.1rem;
+  border-left:2px solid var(--greige);
+  max-width:38rem;
+}
+.citacao blockquote{
+  margin:0;
+  font-family:var(--serifa); font-style:italic;
+  font-size:1.32rem; line-height:1.22;
+  color:var(--osso);
+}
+.citacao figcaption{
+  margin-top:.7rem;
+  font-size:.66rem; font-weight:700; line-height:1.5;
+  letter-spacing:.22em; text-transform:uppercase;
+  color:var(--greige-claro);
 }
 
-/* ------------------------------------------------------------- o que fazemos */
-.fazemos{
-  padding:4.5rem 0 5.5rem;
-  background:
-    linear-gradient(to bottom, rgba(156,150,135,.10), rgba(156,150,135,.10));
+/* ------------------------------------------- por que as noivas nos seguem */
+.noivas{ padding-block:var(--respiro); overflow:hidden; }
+.noivas__nota{
+  margin:.9rem auto 0; max-width:24rem;
+  text-align:center;
+  font-size:.82rem; line-height:1.45;
+  color:var(--greige-fino);
 }
 
-.cartoes{
-  list-style:none; margin:3.25rem 0 0; padding:0;
-  display:grid; gap:1px;
-  background:rgba(66,63,55,.16);
-  border-block:1px solid rgba(66,63,55,.16);
+/* no celular as mensagens correm de lado, uma por vez, com a seguinte à vista */
+.falas{
+  list-style:none;
+  margin:2rem calc(var(--margem) * -1) 0;
+  padding:0 var(--margem) .25rem;
+  display:flex; gap:.85rem;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  scroll-padding-inline:var(--margem);
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
 }
-
-.cartao{
-  background:var(--osso);
-  padding:2.25rem 1.75rem 2rem;
+.falas::-webkit-scrollbar{ display:none; }
+.fala{
+  flex:0 0 79%;
+  max-width:21rem;
+  scroll-snap-align:start;
   display:flex; flex-direction:column;
+  background:var(--branco);
+  border-radius:14px;
+  overflow:hidden;
 }
-.cartao__nome{
-  margin:0 0 .9rem;
-  font-family:var(--serifa); font-weight:400;
-  font-size:1.65rem; line-height:1.15;
+.fala blockquote{
+  flex:1;
+  margin:0;
+  overflow-wrap:break-word;
+  padding:1.4rem 1.25rem 1.25rem;
+  font-weight:600; font-size:1rem; line-height:1.42;
 }
-.cartao__texto{ margin:0 0 1.75rem; flex:1; }
+.fala__quem{
+  padding:.85rem 1.25rem .8rem;
+  background:var(--grafite); color:var(--osso);
+  font-size:.62rem; font-weight:700; line-height:1.4;
+  letter-spacing:.2em; text-transform:uppercase;
+}
 
-.cartao__acao{
-  align-self:flex-start;
-  font-size:.8125rem; font-weight:600;
-  letter-spacing:.12em; text-transform:uppercase;
-  color:var(--grafite);
-  text-decoration:none;
-  padding-bottom:.4rem;
-  border-bottom:2px solid var(--rose);
+/* --------------------------------------------------------------- coberturas */
+.coberturas{ background:var(--branco); padding-block:var(--respiro); }
+
+.obras{
+  list-style:none; margin:2.25rem 0 0; padding:0;
+  display:grid; gap:.7rem;
+}
+.obra{
+  display:flex; flex-direction:column; justify-content:center;
+  background:var(--cartao);
+  border-left:.55rem solid var(--greige);
+  padding:1.05rem 1rem 1.1rem 1.15rem;
+}
+.obra b{
+  display:block;
+  font-family:var(--serifa); font-style:italic; font-weight:400;
+  font-size:clamp(1.7rem, 7.4vw, 2.1rem); line-height:1;
+  letter-spacing:-.01em; text-transform:uppercase;
+  color:var(--greige-texto);
+}
+.obra span{
+  display:block; margin-top:.5rem;
+  font-size:.64rem; font-weight:700; line-height:1.55;
+  letter-spacing:.22em; text-transform:uppercase;
+  text-wrap:balance;      /* a data nunca fica com o ano sozinho na linha de baixo */
+}
+
+/* ---------------------------------------------------------------- perguntas */
+.perguntas{
+  background:var(--greige-fundo);
+  color:var(--branco);
+  padding-block:var(--respiro);
+}
+.pergunta{ background:var(--osso); color:var(--grafite); }
+.pergunta > summary{
+  display:block;
+  font-size:.75rem; font-weight:700; line-height:1.5;
+  letter-spacing:.22em; text-transform:uppercase;
+}
+.pergunta__dentro{ display:flex; align-items:stretch; min-height:3.5rem; }
+.pergunta__texto{ flex:1; min-width:0; align-self:center; padding:1rem .9rem 1rem 1.15rem; }
+.pergunta__mais{
+  flex:none; width:3.5rem;
+  display:grid; place-items:center;
+  background:var(--grafite); color:var(--osso);
+}
+.pergunta > p{
+  padding:.2rem 1.15rem 1.35rem;
+  font-size:1rem; line-height:1.55;
+  max-width:42rem;
+}
+
+/* ------------------------------------------------------------ no instagram */
+.instagram{ padding-block:var(--respiro); }
+.insta__grade{
+  list-style:none; margin:1.6rem 0 0; padding:0;
+  display:grid; grid-template-columns:repeat(3, 1fr); gap:.4rem;
+}
+.insta__grade a{ display:block; overflow:hidden; }
+.insta__grade img{
+  width:100%; aspect-ratio:4/5; object-fit:cover;
+  transition:transform .6s var(--tras), opacity .25s var(--tras);
+}
+.insta__grade a:hover img{ transform:scale(1.04); }
+
+.seguir{
+  display:inline-flex; align-items:flex-end;
+  min-height:2.75rem;
+  margin-top:.55rem;
+  padding:1.2rem 0 .4rem;
+  border-bottom:1.5px solid var(--greige);
+  font-size:.75rem; font-weight:700;
+  letter-spacing:.22em; text-transform:uppercase; text-decoration:none;
   transition:border-color .25s var(--tras);
 }
-.cartao__acao::after{ content:"\00a0→"; }
-.cartao__acao:hover{ border-bottom-color:var(--marrom); }
-
-/* ------------------------------------------------------- herói: dois botões */
-.heroi__acoes{ margin-top:2rem; display:flex; flex-direction:column; align-items:stretch; gap:.75rem; max-width:22rem; }
-.heroi__acoes .botao{ text-align:center; }
-.botao--heroi{ padding:1rem 1.6rem; }
-.heroi__acoes .botao{ white-space:nowrap; }
-/* Android com fonte do sistema ampliada: o botão não pode passar da coluna.
-   Se o texto não couber, ele quebra em duas linhas dentro do botão. */
-@media (max-width:899px){
-  .heroi__acoes{ max-width:min(22rem, 100%); }
-  .heroi__acoes .botao{ padding-inline:1rem; white-space:normal; min-width:0; }
-}
-.botao.botao--vazado{
-  background:transparent; color:var(--osso);
-  box-shadow:inset 0 0 0 1px rgba(242,240,235,.6);
-  padding:1rem 1.6rem;
-}
-.botao.botao--vazado:hover{ background:rgba(242,240,235,.12); color:var(--osso); }
-
-/* ------------------------------------------- serviços: como funciona */
-.cartao__rotulo{
-  margin:0 0 .75rem;
-  font-size:.72rem; font-weight:600; letter-spacing:.2em; text-transform:uppercase;
-  color:var(--marrom);
-}
-.passos{ margin:0 0 1.75rem; padding-left:1.2rem; display:grid; gap:.5rem; font-size:.97rem; }
-.passos li::marker{ font-family:var(--serifa); color:var(--marrom); }
-
-/* marcador do que depende do Medina — some antes de publicar */
-.decidir{
-  display:inline-block;
-  font:600 .7rem/1.3 var(--corpo); letter-spacing:.08em; text-transform:uppercase;
-  color:#8A4B2F; background:#F6E3D8;
-  border:1px dashed #B86A45; padding:.2rem .45rem;
-}
-.decidir--bloco{ display:block; margin:2.5rem 0 0; padding:.9rem 1rem; }
-.decidir--claro{ margin-top:1.25rem; }
-
-/* ---------------------------------------------------------- diferenciais */
-.porque{ padding:5.5rem 0 5rem; }
-.exemplos{ margin-top:3.25rem; display:grid; gap:2.75rem; }
-.exemplo{ border-top:1px solid rgba(66,63,55,.2); padding-top:1.5rem; }
-.exemplo__titulo{
-  margin:0 0 1rem;
-  font-family:var(--serifa); font-weight:400;
-  font-size:1.55rem; line-height:1.18;
-}
-.exemplo__citacao{
-  margin:0; padding-left:1rem;
-  border-left:2px solid var(--rose);
-  font-size:1.05rem; line-height:1.6; font-style:italic;
-}
-.exemplo__fonte{
-  margin:.75rem 0 0 1rem;
-  font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--verde);
-}
-.exemplo__efeito{ margin:1rem 0 0; font-weight:400; }
-.exemplo__efeito--grande{ font-family:var(--serifa); font-size:1.35rem; line-height:1.3; margin-top:.25rem; }
-.exemplo--foto{ display:grid; gap:1.25rem; }
-.exemplo__foto{ margin:0; }
-.exemplo__foto img{ width:100%; aspect-ratio:4/5; object-fit:cover; object-position:center 22%; }
-
-/* ---------------------------------------------------------- prova social */
-.prova{ background:var(--noite); color:var(--osso); padding:5.5rem 0 0; }
-.falas{ list-style:none; margin:3.25rem 0 0; padding:0; display:grid; gap:1rem; }
-.fala{
-  background:var(--osso); color:var(--grafite);
-  padding:1.5rem 1.4rem 1.25rem;
-  border-radius:18px 18px 18px 4px;
-}
-.fala blockquote{ margin:0; font-weight:400; font-size:1.02rem; line-height:1.55; }
-.fala__quem{
-  margin:.9rem 0 0;
-  font-size:.7rem; letter-spacing:.16em; text-transform:uppercase; color:var(--marrom);
-}
-.obras{ margin-top:4rem; padding-bottom:4.5rem; }
-.obras__rotulo{
-  margin:0 0 1.25rem;
-  font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; color:var(--verde-2);
-}
-.obras__lista{
-  list-style:none; margin:0; padding:0;
-  display:grid; grid-template-columns:1fr 1fr; gap:1px;
-  background:rgba(219,183,167,.22);
-  border-block:1px solid rgba(219,183,167,.22);
-}
-.obras__lista li{ background:var(--noite); padding:1.1rem .9rem 1rem 0; }
-.obras__lista b{
-  display:block; font-family:var(--serifa); font-weight:400;
-  font-size:clamp(1.1rem, 4.8vw, 1.45rem); line-height:1.15; color:var(--osso);
-}
-.obras__lista span{
-  display:block; margin-top:.4rem;
-  font-size:.66rem; letter-spacing:.13em; text-transform:uppercase; color:var(--verde-2);
-}
-.prova__foto{ margin:0; }
-.prova__foto img{ width:100%; aspect-ratio:16/9; object-fit:cover; }
-
-/* ------------------------------------------- stories na moldura do celular */
-.stories{ margin:0; display:grid; justify-items:center; gap:1rem; }
-.stories__tela{
-  width:100%; max-width:380px; aspect-ratio:9/16;
-  border:8px solid var(--noite); border-radius:34px; overflow:hidden;
-  background:var(--noite);
-}
-.stories__video{ width:100%; height:100%; object-fit:cover; display:block; }
-.stories__legenda{
-  font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--verde);
-  text-align:center; max-width:30rem;
-}
-
-/* ------------------------------------------------------------ instagram */
-.insta{ margin-top:4.5rem; }
-.insta__grade{
-  list-style:none; margin:0 0 1.75rem; padding:0;
-  display:grid; grid-template-columns:repeat(3, 1fr); gap:4px;
-}
-.insta__grade a{ display:block; }
-.insta__grade img{ width:100%; aspect-ratio:3/4; object-fit:cover; transition:opacity .25s var(--tras); }
-.insta__grade a:hover img{ opacity:.85; }
-
-/* ------------------------------------------------------------- perguntas */
-.perguntas{ padding:5rem 0 5rem; }
-.pergunta{ border-top:1px solid rgba(66,63,55,.2); }
-.pergunta:last-child{ border-bottom:1px solid rgba(66,63,55,.2); }
-.pergunta summary{
-  cursor:pointer; list-style:none;
-  padding:1.2rem 2rem 1.2rem 0; position:relative;
-  font-family:var(--serifa); font-size:1.3rem; line-height:1.25;
-}
-.pergunta summary::-webkit-details-marker{ display:none; }
-.pergunta summary::after{
-  content:"+"; position:absolute; right:.25rem; top:1.05rem;
-  font-family:var(--corpo); font-weight:300; font-size:1.5rem; color:var(--marrom);
-}
-.pergunta[open] summary::after{ content:"–"; }
-.pergunta p{ margin:0 0 1.3rem; max-width:34rem; }
+.seguir::after{ content:"\00a0→"; }
+.seguir:hover{ border-bottom-color:var(--grafite); }
 
 /* ----------------------------------------------------------------- contato */
 .contato{
-  background:var(--noite-2);
-  color:var(--osso);
-  padding:5rem 0 5.5rem;
+  position:relative;
+  display:flex; flex-direction:column; align-items:center;
+  padding:0 0 clamp(2.75rem, 12vw, 3.5rem);
+  background:#0c0a07;
+  color:var(--branco);
   text-align:center;
+  overflow:hidden;
 }
-.contato__selo{ width:112px; margin:0 auto 2rem; opacity:.9; }
-.contato__titulo{ margin-bottom:2.5rem; }
-
-.botao{
-  display:inline-block;
-  background:var(--rose);
-  color:var(--noite);
-  text-decoration:none;
-  font-size:.8125rem; font-weight:700;
-  letter-spacing:.14em; text-transform:uppercase;
-  padding:1.15rem 2.5rem;
-  transition:background .25s var(--tras), transform .25s var(--tras);
+/* no celular a fotografia fica em cima, inteira, e o convite vem embaixo, fora do casal */
+.contato__foto{ position:relative; display:block; width:100%; }
+.contato__foto img{ width:100%; height:auto; }
+.contato__foto::after{
+  content:""; position:absolute; inset:0;
+  background:
+    linear-gradient(to bottom, rgba(12,10,7,.5) 0%, rgba(12,10,7,.1) 24%, rgba(12,10,7,0) 40%),
+    linear-gradient(to top, rgba(12,10,7,1) 0%, rgba(12,10,7,.72) 9%, rgba(12,10,7,0) 26%);
+  pointer-events:none;
 }
-.botao:hover{ background:var(--osso); transform:translateY(-2px); }
+.contato__selo{
+  position:absolute; z-index:1;
+  top:clamp(1.5rem, 6.5vw, 2.5rem); left:50%; transform:translateX(-50%);
+  width:clamp(92px, 25vw, 112px);
+}
+.contato__conteudo{
+  position:relative; z-index:1;
+  width:100%;
+  margin-top:-2.75rem;
+  padding-inline:var(--margem);
+  display:flex; flex-direction:column; align-items:center;
+}
+.contato__titulo{
+  margin:0;
+  max-width:11em;
+  font-family:var(--serifa); font-weight:400;
+  font-size:clamp(2.1rem, 9.2vw, 2.85rem); line-height:1.04;
+  letter-spacing:-.012em;
+  text-wrap:balance;
+}
+.contato .botao{ margin-top:1.75rem; width:min(100%, 22.5rem); }
 
 .redes{
-  list-style:none; margin:2.75rem 0 0; padding:0;
-  display:flex; gap:2rem; justify-content:center; flex-wrap:wrap;
+  list-style:none; margin:1.15rem 0 0; padding:0;
+  display:flex; flex-wrap:wrap; justify-content:center; gap:0 2rem;
 }
 .redes a{
-  font-size:.78rem; letter-spacing:.16em; text-transform:uppercase;
-  color:var(--verde-2); text-decoration:none;
-  padding-bottom:.3rem; border-bottom:1px solid transparent;
-  transition:color .25s var(--tras), border-color .25s var(--tras);
+  display:inline-flex; align-items:center;
+  min-height:44px;
+  padding:.4rem 0;
+  font-size:.7rem; font-weight:700;
+  letter-spacing:.22em; text-transform:uppercase; text-decoration:none;
+  color:var(--osso);
+  text-underline-offset:.45em;
 }
-.redes small{ font-size:.58rem; letter-spacing:.14em; color:var(--verde); margin-left:.45rem; }
-.redes a:hover small{ color:var(--verde); }
-.redes a:hover{ color:var(--rose); border-bottom-color:currentColor; }
-
-/* ------------------------------------------- barra de versões (link privado) */
-.versoes{
-  position:fixed; left:50%; transform:translateX(-50%);
-  bottom:calc(1rem + env(safe-area-inset-bottom, 0px)); z-index:50;
-  display:flex; align-items:center; gap:.4rem;
-  background:var(--noite); color:var(--osso);
-  padding:.5rem .6rem .5rem 1rem; border-radius:999px;
-  box-shadow:0 6px 24px rgba(0,0,0,.35);
-  font-size:.72rem; letter-spacing:.12em; text-transform:uppercase;
-}
-.versoes[hidden]{ display:none; }
-.versoes__rotulo{ margin-right:.35rem; color:var(--verde-2); }
-.versoes a{
-  display:grid; place-items:center; width:2.1rem; height:2.1rem; border-radius:50%;
-  color:var(--osso); text-decoration:none; font-weight:600;
-  box-shadow:inset 0 0 0 1px rgba(242,240,235,.35);
-}
-.versoes a[aria-current]{ background:var(--rose); color:var(--noite); box-shadow:none; }
+.redes a:hover{ text-decoration:underline; text-decoration-thickness:1px; }
+.redes small{ margin-left:.5rem; font-size:.56rem; font-weight:400; letter-spacing:.2em; color:var(--greige-claro); }
 
 /* ------------------------------------------------------------------ rodapé */
 .rodape{
   background:var(--noite);
-  color:var(--verde);
-  padding:2rem 1.5rem;
-  display:flex; flex-direction:column; gap:.35rem;
-  align-items:center; text-align:center;
-  font-size:.78rem; letter-spacing:.1em;
+  color:var(--greige-claro);
+  padding:1.75rem var(--margem) calc(1.75rem + env(safe-area-inset-bottom, 0px));
+  display:flex; flex-direction:column; align-items:center; gap:.3rem;
+  text-align:center;
+  font-size:.74rem; letter-spacing:.12em;
 }
-.rodape p{ margin:0; }
 
 /* ------------------------------------------------------------------ surgir */
 /* estado visível por padrão: quem rola vê apenas um deslocamento leve */
 .surge{ transform:translateY(14px); }
 .surge.visivel{ transform:none; transition:transform .7s var(--tras); }
-@media (prefers-reduced-motion:reduce){
-  .surge{ transform:none; }
-}
+@media (prefers-reduced-motion:reduce){ .surge{ transform:none; } }
 
-/* ===================================================== telas maiores ===== */
+
+/* ==========================================================================
+   TELAS MÉDIAS (tablet em pé) — o mesmo desenho do celular, com mais ar
+   ========================================================================== */
 @media (min-width:600px){
-  .cartoes{ grid-template-columns:1fr 1fr; }
-}
+  :root{ --margem:2.5rem; --respiro:5.5rem; }
+  .faixa{ max-width:46rem; }
 
-@media (min-width:900px){
-  body{ font-size:1.0625rem; }
+  .tese{ font-size:clamp(2.6rem, 6.4vw, 3.4rem); }
+  .heroi__acoes{ flex-direction:row; justify-content:center; gap:1rem; }
+  .heroi__acoes .botao{ width:auto; }
 
-  .heroi__topo{ padding:2.5rem 3rem 0; }
-  .heroi__logo{ width:130px; }
-  .heroi__texto{ padding:3rem 3rem 0; max-width:76rem; }
-  .tese{ font-size:clamp(3.4rem, 5.4vw, 5.1rem); }
-
-  .faixa{ padding-inline:3rem; }
-
-  .quem{ padding:8rem 0 7rem; }
-  .quem__grade{
-    grid-template-columns:minmax(0,.85fr) minmax(0,1fr);
-    gap:4.5rem; align-items:center;
+  .falas{
+    margin-inline:0; padding:0;
+    display:grid; grid-template-columns:1fr 1fr; gap:1rem;
+    overflow:visible;
   }
+  .fala{ max-width:none; }
 
-  .fazemos{ padding:7rem 0 8rem; }
-  .cartoes{ grid-template-columns:repeat(3, 1fr); }
-  .porque{ padding:8rem 0 7rem; }
-  .exemplos{ grid-template-columns:1fr 1fr; gap:3.5rem 4rem; }
-  .exemplo--foto{ grid-column:1 / -1; grid-template-columns:minmax(0,.8fr) minmax(0,1fr); gap:1rem 4rem; align-items:center; }
-  .exemplo--foto .exemplo__titulo{ grid-column:1 / -1; }
-  .prova{ padding-top:8rem; }
-  .falas{ grid-template-columns:repeat(3, 1fr); gap:1.25rem; }
-  .obras__lista{ grid-template-columns:repeat(4, 1fr); }
-  .perguntas{ padding:7rem 0; }
-  .insta__grade{ grid-template-columns:repeat(6, 1fr); }
-  .stories{ grid-column:1 / -1; }
-  .heroi__acoes{ flex-direction:row; align-items:flex-start; gap:1rem; max-width:none; }
-  .prova__foto img{ aspect-ratio:21/9; }
-  .exemplo__titulo{ font-size:1.75rem; }
-  .exemplo__efeito--grande{ font-size:1.6rem; }
-  .cartao{ padding:2.5rem 1.6rem 2.25rem; }
+  .obras{ grid-template-columns:1fr 1fr; grid-auto-rows:1fr; gap:.85rem 1.25rem; }
+  .obra b{ font-size:clamp(1.5rem, 3.4vw, 2rem); }
 
-
-  .contato{ padding:7rem 0 8rem; }
-  .rolar{ justify-self:end; margin-right:3rem; }
+  .insta__grade{ gap:.6rem; }
+  .contato .botao{ width:auto; }
 }
 
-
-/* ==================================================================
-   COMPUTADOR — página de revista (22/09, direção da Fable).
-   Tudo aqui mora em media query: o celular (até 899px) não lê nada disto.
-   ================================================================== */
-@media (min-width:900px){
-  /* eixo único: o herói alinha com o conteúdo */
-  .heroi{ min-height:92vh; }
-  .heroi::after{
+@media (min-width:600px) and (max-width:899px){
+  /* tablet em pé: a fotografia do contato em coluna, com as bordas apagando no escuro */
+  .contato__foto{ max-width:38rem; margin-inline:auto; }
+  .contato__foto::after{
     background:
-      linear-gradient(to bottom, rgba(20,19,16,.70) 0%, rgba(20,19,16,.25) 38%, rgba(20,19,16,0) 58%),
-      linear-gradient(to top, rgba(41,40,34,.92) 0%, rgba(41,40,34,0) 25%);
+      linear-gradient(to right, rgba(12,10,7,1) 0%, rgba(12,10,7,0) 16%, rgba(12,10,7,0) 84%, rgba(12,10,7,1) 100%),
+      linear-gradient(to bottom, rgba(12,10,7,.5) 0%, rgba(12,10,7,.1) 24%, rgba(12,10,7,0) 40%),
+      linear-gradient(to top, rgba(12,10,7,1) 0%, rgba(12,10,7,.72) 9%, rgba(12,10,7,0) 26%);
   }
-  .heroi__texto{ align-self:center; padding-top:0; }
-  .tese{ font-size:clamp(3rem, 4.2vw, 4.6rem); }
-  /* versões com o casal à esquerda da foto: o texto vai para a direita */
-  .heroi--direita .heroi__texto{ justify-self:end; }
+}
 
-  /* Quem somos: foto à esquerda com a altura da coluna; título e texto à direita */
-  .quem .faixa{
-    display:grid; grid-template-columns:minmax(0,5fr) minmax(0,7fr);
-    grid-template-areas:"foto cabeca" "foto texto";
-    grid-template-rows:auto 1fr; column-gap:5rem; row-gap:2rem;
+@media (min-width:900px){
+  /* contato: a capela em tela cheia, o selo no alto do arco, o convite sobre o terço de baixo */
+  .contato{
+    min-height:max(54.3vw, 34rem);
+    padding:0 var(--margem) clamp(2.75rem, 4.6vw, 5.5rem);
   }
-  .quem__grade{ display:contents; }
-  .quem .cabeca{ grid-area:cabeca; align-self:end; }
-  .quem__foto{ grid-area:foto; }
-  .quem__foto img{ height:100%; min-height:640px; aspect-ratio:auto; }
+  .contato__foto{ position:absolute; inset:0; }
+  .contato__foto img{ height:100%; object-fit:cover; object-position:50% 50%; }
+  .contato__foto::after{
+    background:
+      linear-gradient(to bottom, rgba(12,10,7,.34) 0%, rgba(12,10,7,.14) 30%, rgba(12,10,7,.24) 52%, rgba(12,10,7,.74) 82%, rgba(12,10,7,.9) 100%);
+  }
+  .contato__selo{ top:16%; }
+  .contato__conteudo{ margin-top:auto; padding:0; }
+}
+
+
+/* ==========================================================================
+   COMPUTADOR — o modelo da designer, medido no arquivo dela (tela de 1440)
+   Tudo aqui mora em media query: o celular não lê nada disto.
+   ========================================================================== */
+@media (min-width:900px){
+  :root{ --respiro:clamp(4.75rem, 6vw, 7.5rem); }
+  body{ font-size:clamp(1.0625rem, 1.583vw, 1.8rem); line-height:1.3; }
+  .faixa{ max-width:none; width:min(72.8vw, 100% - 6rem); padding-inline:0; }
+
+  .titulo{ font-size:clamp(3.1rem, 5.3vw, 6.4rem); line-height:.96; letter-spacing:-.005em; }
+  .titulo--longo{ font-size:clamp(2.8rem, 4.62vw, 5.6rem); line-height:1.02; }
+  .quem .titulo{ font-size:clamp(2.9rem, 4.9vw, 5.9rem); }
+  .noivas .titulo{ font-size:clamp(2.9rem, 4.9vw, 5.9rem); }
+  .rotulo{ font-size:clamp(.72rem, 1.17vw, 1.3rem); padding:.9em 1.25em .85em 1.55em; }
+
+  .botao{
+    min-height:2.75rem;    /* 44px: tablet deitado também é tela de toque */
+    padding:.82em 1.7em .78em 1.9em;
+    font-size:clamp(.75rem, 1.13vw, 1.28rem);
+    letter-spacing:.2em;
+    white-space:nowrap;
+  }
+
+  /* ----- herói: a fotografia em tela cheia, a tese dos dois lados do casal */
+  .heroi{
+    display:block;
+    min-height:0;
+    height:clamp(33rem, 55.2vw, 100svh);
+  }
+  .heroi__foto{ position:absolute; inset:0; margin:0; padding:0; }
+  .heroi__foto img{ width:100%; height:100%; object-fit:cover; object-position:50% 50%; }
+  .heroi__foto::after{
+    top:auto; bottom:0; height:30%;
+    background:linear-gradient(to top, rgba(3,3,3,.5) 0%, rgba(3,3,3,0) 100%);
+  }
+  .heroi__topo,
+  .tese,
+  .heroi__acoes{ position:absolute; left:0; right:0; z-index:1; margin:0; }
+
+  .heroi__topo{ top:21.4%; padding:0; display:flex; justify-content:center; }
+  .heroi__logo{ width:clamp(118px, 11.5vw, 222px); }
+
+  .tese{
+    top:54.2%; transform:translateY(-50%);
+    padding:0;
+    display:grid; grid-template-columns:1fr 1fr;
+    column-gap:clamp(11.5rem, 21.3vw, 27rem);
+    font-size:clamp(2rem, 3.2vw, 4rem);
+    line-height:1.04; letter-spacing:0;
+  }
+  .tese__a{ justify-self:end; text-align:right; }
+  .tese__b{ justify-self:start; text-align:left; }
+  .tese__a > span,
+  .tese__b > span{ display:block; }
+
+  .heroi__acoes{
+    bottom:9.3%;
+    width:auto; padding:0;
+    flex-direction:row; justify-content:center;
+    gap:clamp(1rem, 2.4vw, 2.6rem);
+  }
+
+  /* ----- quem somos: texto à esquerda, fotografia à direita com a altura da coluna */
+  .quem__grade{
+    grid-template-columns:minmax(0, 46.9fr) minmax(0, 43.6fr);
+    grid-template-areas:"cabeca foto" "texto foto";
+    grid-template-rows:auto 1fr;
+    column-gap:9.4%; row-gap:clamp(1.75rem, 2.7vw, 3.25rem);
+  }
+  .quem__cabeca{ grid-area:cabeca; }
   .quem__texto{ grid-area:texto; }
-  .quem__texto p{ max-width:62ch; }
+  .quem__foto{ grid-area:foto; }
+  .quem__foto img{ height:100%; min-height:100%; aspect-ratio:auto; object-position:50% 30%; }
+  .quem .titulo{ margin-top:clamp(2.5rem, 4.6vw, 5.5rem); }
+  .quem__texto p{ max-width:none; }
+  .quem__texto p + p{ margin-top:1.16em; }
 
-  /* Serviços: três colunas de revista, sem moldura */
-  .cartoes{ background:none; border:0; gap:3.5rem; counter-reset:servico; }
-  .cartao{ background:none; padding:1.75rem 0 0; border-top:1px solid rgba(66,63,55,.28); counter-increment:servico; }
-  .cartao::before{
-    content:"0" counter(servico);
-    font-size:.75rem; font-weight:600; letter-spacing:.2em; color:var(--marrom);
-    margin-bottom:1rem;
+  /* ----- serviços e perguntas: título à esquerda, linhas à direita */
+  .servicos__grade,
+  .perguntas__grade{ grid-template-columns:minmax(0, 32.5fr) minmax(0, 67.5fr); gap:0; align-items:start; }
+  .linhas{ gap:clamp(.85rem, 1.18vw, 1.4rem); }
+
+  .linha > summary,
+  .pergunta > summary{
+    font-size:clamp(.74rem, 1.1vw, 1.25rem);
+    letter-spacing:.18em;
   }
-  .cartao__texto{ flex:none; margin-bottom:1.25rem; }
-  .cartao__acao{ margin-top:auto; padding-top:1.5rem; }
+  .linha__dentro,
+  .pergunta__dentro{ min-height:clamp(3.25rem, 3.9vw, 4.6rem); }
+  .linha__dentro{ padding:.6em 1.3em .6em 1.05em; }
+  .linha__corpo{ padding:.5em 1.05em 1.9em; font-size:clamp(1rem, 1.25vw, 1.45rem); line-height:1.5; }
+  .linha__corpo .botao{ margin-top:1.5em; }
+  .citacao blockquote{ font-size:clamp(1.4rem, 1.95vw, 2.3rem); line-height:1.16; }
+  .citacao figcaption{ font-size:clamp(.66rem, .83vw, .95rem); }
 
-  /* Diferenciais: argumento dos dois lados, o produto no centro */
-  .exemplos{ grid-template-columns:minmax(0,1fr) minmax(0,360px) minmax(0,1fr); gap:4rem 3.5rem; align-items:start; }
-  .exemplos > .exemplo:nth-child(1){ grid-column:1; grid-row:1; }
-  .exemplos > .exemplo:nth-child(2){ grid-column:3; grid-row:1; }
-  .exemplos > .stories{ grid-column:2; grid-row:1; }
-  .stories__tela{ max-width:360px; }
-  .exemplo__titulo{ font-size:1.6rem; }
-  .exemplo--foto{
-    grid-column:1 / -1; grid-row:2;
-    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
-    grid-template-rows:1fr auto auto 1fr; column-gap:5rem; row-gap:1.25rem;
-  }
-  .exemplo--foto .exemplo__foto{ grid-column:1; grid-row:1 / -1; }
-  .exemplo--foto .exemplo__titulo{ grid-column:2; grid-row:2; font-size:2.4rem; line-height:1.15; }
-  .exemplo--foto .exemplo__efeito--grande{ grid-column:2; grid-row:3; font-family:var(--corpo); font-size:1.25rem; line-height:1.6; }
-  .exemplo__foto img{ height:560px; aspect-ratio:auto; }
+  .pergunta__texto{ padding:.6em 1em .6em 1.05em; }
+  .pergunta__mais{ width:clamp(3.25rem, 3.9vw, 4.6rem); }
+  .pergunta > p{ padding:.3em 1.4em 1.5em 1.3em; font-size:clamp(1rem, 1.25vw, 1.45rem); line-height:1.5; }
+  .mais{ width:clamp(.95rem, 1.25vw, 1.4rem); height:clamp(.95rem, 1.25vw, 1.4rem); }
 
-  /* Fecho: a foto acompanha, não domina */
-  .prova__foto img{ max-height:520px; }
+  /* ----- mensagens: duas por linha; quatro quando há largura (ver 1200px) */
+  .noivas__nota{ max-width:none; margin-top:1.1em; font-size:clamp(.82rem, .97vw, 1.1rem); }
+  .falas{ gap:clamp(.9rem, 1.46vw, 1.75rem); margin-top:clamp(2rem, 3vw, 3.5rem); }
+  .fala{ border-radius:clamp(12px, 1vw, 16px); }
+  .fala blockquote{ padding:1.25em 1.2em 1.1em; font-size:1rem; line-height:1.38; }
+  .fala__quem{ padding:1.05em 1.5em 1em; font-size:.62rem; }
 
-  /* Perguntas: título à esquerda, respostas à direita, no mesmo eixo */
-  .perguntas .faixa--estreita{ max-width:1120px; }
-  .perguntas .faixa{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,2fr); column-gap:5rem; align-items:start; }
-  .perguntas .faixa > .olho{
-    grid-column:1; grid-row:1 / span 3;
-    font-family:var(--serifa); font-weight:400; text-transform:none; letter-spacing:-.005em;
-    font-size:clamp(2.2rem, 2.6vw, 3.2rem); line-height:1.12; margin:0;
-  }
-  .perguntas .faixa > .pergunta{ grid-column:2; }
-  .pergunta summary{ font-size:1.25rem; }
-  .perguntas .faixa > .insta{ grid-column:1 / -1; }
-  .insta__grade{ gap:16px; }
-  .insta__grade img{ aspect-ratio:4/5; }
+  /* ----- coberturas: dois cartões por linha */
+  .obras{ grid-template-columns:1fr 1fr; gap:clamp(.8rem, 1.04vw, 1.25rem) 4.87%; margin-top:clamp(2.5rem, 3.2vw, 3.75rem); }
+  .obra{ border-left-width:clamp(.55rem, .76vw, .9rem); padding:1.45vw 1.2vw 1.7vw 1.6vw; }
+  .obra b{ font-size:clamp(1.8rem, 3.1vw, 3.75rem); }
+  .obra span{ margin-top:.25em; font-size:clamp(.62rem, .9vw, 1.05rem); letter-spacing:.22em; }
 
-  .obras__lista span{ font-size:.78rem; }
+  /* ----- no instagram: seis lado a lado */
+  .insta__grade{ grid-template-columns:repeat(6, 1fr); gap:1.07%; margin-top:clamp(1rem, .9vw, 1.5rem); }
+  .seguir{ font-size:clamp(.75rem, 1vw, 1.15rem); margin-top:clamp(.55rem, 1vw, 1.5rem); }
+
+  /* ----- contato: a capela em tela cheia, o selo no alto do arco */
+  .contato{ min-height:clamp(33rem, 54.3vw, 100svh); }
+  .contato__selo{ width:clamp(104px, 9.05vw, 176px); }
+  .contato__titulo{ max-width:none; font-size:clamp(2.4rem, 3.8vw, 4.8rem); letter-spacing:-.005em; }
+  .contato .botao{ margin-top:clamp(1.25rem, 1.7vw, 2.2rem); }
+  .redes{ margin-top:clamp(.9rem, 1.3vw, 1.8rem); gap:0 3rem; }
+  .redes a{ font-size:clamp(.7rem, .83vw, .95rem); }
+  .redes small{ font-size:.8em; }
+
+  .rodape{ font-size:clamp(.74rem, .8vw, .95rem); padding-block:2rem; }
 }
 
-@media (min-width:1280px){
-  body{ font-size:1.125rem; }
-  .faixa, .perguntas .faixa--estreita{ max-width:none; width:min(1280px, calc(100% - 128px)); padding-inline:0; }
-  .heroi__topo, .heroi__texto{ padding-inline:max(64px, calc((100% - 1280px) / 2)); }
-  .heroi__texto{ max-width:none; }
-  .rolar{ margin-right:max(64px, calc((100% - 1280px) / 2)); }
-  .quem, .fazemos, .porque, .perguntas{ padding-block:7rem; }
-  .prova{ padding-top:7rem; }
-  .afirma{ font-size:clamp(2.6rem, 2.6vw, 3.6rem); }
-  .olho{ letter-spacing:.2em; }
-  .cartao__texto, .passos{ font-size:1.0625rem; }
-  .exemplo__efeito, .exemplo__citacao{ font-size:1.125rem; }
-  .fala blockquote{ font-size:1.0625rem; }
+@media (min-width:1200px){
+  .falas{ grid-template-columns:repeat(4, 1fr); }
+  .fala blockquote{ padding:1.25em 1.05em 1.1em; font-size:clamp(.92rem, 1.12vw, 1.3rem); }
+  .fala__quem{ padding:1.15em 1.5em 1.05em; font-size:clamp(.56rem, .68vw, .8rem); }
 }
 
-@media (min-width:1600px){
-  body{ font-size:1.1875rem; }
-  .faixa, .perguntas .faixa--estreita{ width:min(1440px, calc(100% - 160px)); }
-  .heroi__topo, .heroi__texto{ padding-inline:max(80px, calc((100% - 1440px) / 2)); }
-  .rolar{ margin-right:max(80px, calc((100% - 1440px) / 2)); }
-  .quem, .fazemos, .porque, .perguntas{ padding-block:8rem; }
-  .prova{ padding-top:8rem; }
-  .prova__foto img{ max-height:560px; }
+/* telas muito largas: o conteúdo para de crescer, o respiro continua */
+@media (min-width:1920px){
+  .faixa{ width:min(87.5rem, 100% - 6rem); }
 }
